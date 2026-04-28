@@ -304,8 +304,11 @@ Just describe the outcome.
 You should see:
 
 > diffs applied incrementally
+
 > tests re-running automatically
+
 > failures reducing over time
+
 > new issues surfacing as others are fixed
 
 This is expected.
@@ -317,7 +320,9 @@ Don’t just look for “tests passing”.
 Look for:
 
 > cross-file changes (not isolated fixes)
+
 > behavior alignment (not just patching tests)
+
 > multiple passes before stability
 
 
