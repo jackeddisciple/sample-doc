@@ -17,12 +17,14 @@ This enables it to handle **interdependent bugs across modules**, not just isola
 ## What Makes This Different
 
 Traditional tools assume:
-
+```diff
 Input → Generate → Done
+```
 
 Blackbox CLI operates as a loop:
-
+```diff
 Observe → Patch → Re-evaluate → Adjust → Repeat
+```
 
 It does not assume correctness in one attempt.
 It converges toward correctness.
@@ -38,7 +40,7 @@ It failed in how different parts interpreted the same rules.
 
 ### Status Wasn’t Consistent Across Layers
 
-
+```diff
 // Service
 status = BookingStatus.ACTIVE
 
@@ -47,7 +49,7 @@ expect(status).toBe(BookingStatus.PENDING)
 
 // Availability
 filter(status === CONFIRMED)
-
+```
 
 Each layer was “correct” in isolation.
 Together, they were incompatible.
@@ -55,7 +57,7 @@ Together, they were incompatible.
 
 
 ### Time Rules Were Interpreted Differently
-
+```diff
 // Validator
 startTime > endTime
 
@@ -64,7 +66,7 @@ startTime >= endTime
 
 // Availability
 overlap(start, end)
-
+```
 
 Same concept.
 Different boundaries.
@@ -74,13 +76,13 @@ That’s where edge cases break.
 
 ### Data Was Quietly Disappearing
 
-
+```diff
 findByResourceId() {
   return bookings.filter(b => b.status !== CANCELLED)
 }
+```
 
-
-Cancelled bookings existed —
+Cancelled bookings existed,
 just not everywhere.
 
 ### The Result
@@ -110,10 +112,10 @@ At this point, there is no single “fix”.
 
 
 ## Running the CLI
-
+```diff
 Prompt (Minimax-M2.7)
 - stabilize system and fix failing tests across modules
-
+```
 
 No step-by-step instructions.
 Only the desired outcome.
@@ -162,12 +164,12 @@ It is becoming more honest.
 ## Real Behavior of Iteration
 
 What you observe across runs:
-
+```diff
 Run 1 → widespread failures  
 Run 2 → fewer, but deeper issues  
 Run 3 → edge-case instability  
 Run 4 → consistency achieved
-
+```
 
 No artificial “iteration mode”.
 Just natural convergence.
@@ -176,10 +178,10 @@ Just natural convergence.
 ##  Micro-Level Example
 
 A single validation change:
-
+```diff
 - if (startTime >= endTime)
 + if (startTime > endTime)
-
+```
 
 Impact:
 
@@ -270,48 +272,53 @@ Blackbox CLI handles this by:
 Run this on your own codebase — especially if it’s messy.
 
 1. Install
+```diff
 curl -fsSL https://blackbox.ai/install.sh | bash
-
+```
 2. Go to Any Project with Failing Tests
+```diff
 cd your-project
-
+```
 - Note for testing: 
-tests are already failing for your repo
-logic is inconsistent
-edge cases are broken
+- tests are already failing for your repo
+- logic is inconsistent
+- edge cases are broken
 
 3. Configure CLI with your API key
+```diff
 blackbox configure
-
+```
 4. Start the CLI
+```diff
 blackbox
-
-3. Run One Command
+```
+5. Run One Command
+```diff
 fix failing tests and stabilize system
-
+```
 No step by step instructions.
 Just describe the outcome.
 
-4. Watch What Happens
+6. Watch What Happens
 
 You should see:
 
-diffs applied incrementally
-tests re-running automatically
-failures reducing over time
-new issues surfacing as others are fixed
+> diffs applied incrementally
+> tests re-running automatically
+> failures reducing over time
+> new issues surfacing as others are fixed
 
 This is expected.
 
-5. What to Look For
+What to Look For
 
 Don’t just look for “tests passing”.
 
 Look for:
 
-cross-file changes (not isolated fixes)
-behavior alignment (not just patching tests)
-multiple passes before stability
+> cross-file changes (not isolated fixes)
+> behavior alignment (not just patching tests)
+> multiple passes before stability
 
 
 ### Use It Where It Actually Matters
