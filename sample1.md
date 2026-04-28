@@ -96,7 +96,7 @@ Just a system where:
 * fixes in one place broke another
 
 
-##  Initial State — System Under Stress
+##  Initial State - System Under Stress
 
 Failures were not isolated:
 
@@ -117,7 +117,7 @@ Prompt (Minimax-M2.7)
 - stabilize system and fix failing tests across modules
 ```
 
-No step-by-step instructions.
+No step by step instructions.
 Only the desired outcome.
 
 
